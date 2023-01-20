@@ -23,9 +23,9 @@ const Card = () => {
       <p className="absolute bottom-5 text-gray-800/80">20th Jan, 2023</p>
 
       {/* Options */}
-      <div className="absolute h-full right-0 top-0 bg-white bg-opacity-10 border-l border-l-white text-white flex flex-col justify-center px-2 text-2xl gap-5 transition-all translate-x-14 group-hover:-translate-x-0 duration-300 shadow-xl">
-        <BiEdit className="cursor-pointer hover:scale-110" />
-        <MdOutlineDelete className="cursor-pointer hover:scale-110" />
+      <div className="absolute h-full right-0 top-0 bg-white bg-opacity-10 border-l border-l-white text-white flex flex-col justify-center px-[10px] text-2xl gap-5 transition-all translate-x-14 group-hover:-translate-x-0 duration-300 shadow-xl">
+        <BiEdit className="cursor-pointer hover:scale-125 duration-200" />
+        <MdOutlineDelete className="cursor-pointer hover:scale-125 duration-200" />
       </div>
     </div>
   );
