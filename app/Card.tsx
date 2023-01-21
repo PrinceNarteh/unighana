@@ -17,7 +17,7 @@ const Card = ({ idx, note }: { idx: number; note: INote }) => {
       <h3 className="truncate font-bold text-xl mb-2 border-b border-b-gray-400/70 pb-1">
         {title}
       </h3>
-      <p className="line-clamp-4">{content}</p>
+      <p className="line-clamp-4 text-gray-300">{content}</p>
       <p className="absolute bottom-5">20th Jan, 2023</p>
 
       {/* Options */}

@@ -8,9 +8,6 @@ export const createNoteDto = z.object({
   content: z
     .string({ required_error: "Content is required" })
     .min(1, "Content cannot be empty"),
-  color: z.string({
-    required_error: "Color is required",
-  }),
 });
 
 export const updateNoteDto = createNoteDto.partial();

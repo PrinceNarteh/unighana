@@ -23,8 +23,9 @@ const Form = ({ setOpenModal }: ISearchBar) => {
 
   const dispatch = useAppDispatch();
 
-  const submitData: SubmitHandler<Inputs> = (data) => {
-    dispatch(createNote(data));
+  const submitData: SubmitHandler<Inputs> = async (data) => {
+    await dispatch(createNote(data));
+    setOpenModal(false);
   };
 
   console.log(errors);

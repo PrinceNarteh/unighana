@@ -39,6 +39,7 @@ const noteSlice = createSlice({
     builder.addCase(
       createNote.fulfilled,
       (state, action: PayloadAction<INote>) => {
+        console.log(action.payload);
         state.notes = [action.payload, ...state.notes];
       }
     );
