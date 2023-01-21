@@ -13,3 +13,18 @@ export const createNoteDto = z.object({
 export const updateNoteDto = createNoteDto.partial();
 
 export const validateId = (id: string) => mongoose.Types.ObjectId.isValid(id);
+
+export const createUserDto = z.object({
+  firstName: z
+    .string({ required_error: "First name is required" })
+    .min(1, "First name cannot be empty"),
+  lastName: z
+    .string({ required_error: "Last name is required" })
+    .min(1, "Last name cannot be empty"),
+  email: z
+    .string({ required_error: "Email is required" })
+    .email({ message: "Invalid email" }),
+  password: z
+    .string({ required_error: "Password is required" })
+    .min(6, "Password must be six (6) characters or more"),
+});

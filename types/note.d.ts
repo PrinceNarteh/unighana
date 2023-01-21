@@ -5,6 +5,13 @@ export interface INote {
   favourite: boolean;
 }
 
+export interface IUser {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
+
 export type Inputs = {
   title: string;
   content: string;
