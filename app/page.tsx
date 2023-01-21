@@ -7,7 +7,7 @@ import Navbar from "./Navbar";
 import SearchBar from "./SearchBar";
 import { useSelector } from "react-redux";
 import { fetchNotes, selectAllNotes } from "@/features/notes/notesSlice";
-import { RootState, useAppDispatch } from "@/store";
+import { useAppDispatch } from "@/store";
 import Form from "./Form";
 
 const poppins = Poppins({ weight: ["500"], subsets: ["latin"] });
@@ -19,8 +19,6 @@ export default function Home() {
   useEffect(() => {
     dispatch(fetchNotes());
   }, []);
-
-  console.log(notes);
 
   return (
     <main className={poppins.className}>
