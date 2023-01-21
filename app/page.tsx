@@ -1,13 +1,26 @@
 "use client";
 
+import { useEffect } from "react";
 import { Poppins } from "@next/font/google";
 import Card from "./Card";
 import Navbar from "./Navbar";
 import SearchBar from "./SearchBar";
+import { useSelector } from "react-redux";
+import { fetchNotes, selectAllNotes } from "@/features/notes/notesSlice";
+import { RootState, useAppDispatch } from "@/store";
 
 const poppins = Poppins({ weight: ["500"], subsets: ["latin"] });
 
 export default function Home() {
+  const notes = useSelector(selectAllNotes);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchNotes());
+  }, []);
+
+  console.log(notes);
+
   return (
     <main className={poppins.className}>
       <Navbar />
