@@ -1,11 +1,8 @@
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-
-type Inputs = {
-  title: string;
-  content: string;
-  color: string;
-};
+import { createNote } from "@/features/notes/notesSlice";
+import { useAppDispatch } from "@/store";
+import { Inputs } from "@/types/note";
 
 const Form = () => {
   const {
@@ -16,11 +13,14 @@ const Form = () => {
     defaultValues: {
       title: "",
       content: "",
-      color: "#" + Math.floor(Math.random() * 16777215).toString(16),
     },
   });
 
-  const submitData: SubmitHandler<Inputs> = (data) => console.log(data);
+  const dispatch = useAppDispatch();
+
+  const submitData: SubmitHandler<Inputs> = (data) => {
+    dispatch(createNote(data));
+  };
 
   console.log(errors);
 
@@ -55,15 +55,6 @@ const Form = () => {
               {...register("content", { required: true })}
             />
             <p></p>
-          </div>
-          <div className="flex items-center space-x-3">
-            <span>Color:</span>
-            <input
-              type="color"
-              id=""
-              className="w-8 h-8 cursor-pointer rounded-full"
-              {...register("color")}
-            />
           </div>
           <div>
             <button className="bg bg-teal-500 text-white py-2 px-5 rounded-full float-right">

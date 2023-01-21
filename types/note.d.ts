@@ -4,3 +4,8 @@ export interface INote {
   content: string;
   favourite: boolean;
 }
+
+export type Inputs = {
+  title: string;
+  content: string;
+};

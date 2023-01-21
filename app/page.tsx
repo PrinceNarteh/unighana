@@ -27,11 +27,11 @@ export default function Home() {
       <div className="max-w-5xl mx-auto">
         <div className="grid-auto-fit gap-5 p-5">
           {notes.map((note, idx) => (
-            <Card note={note} key={idx} />
+            <Card note={note} key={idx} idx={idx} />
           ))}
         </div>
       </div>
-      <Form />
+      {/* <Form /> */}
     </main>
   );
 }

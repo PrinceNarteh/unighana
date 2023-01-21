@@ -4,6 +4,7 @@ type INote = {
   title: string;
   content: string;
   favourite?: boolean;
+  color: string;
 };
 
 const noteSchema = new Schema<INote>(

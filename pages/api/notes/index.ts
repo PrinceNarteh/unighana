@@ -14,6 +14,7 @@ const getAllNotes = async (req: NextApiRequest, res: NextApiResponse) => {
 
 const createNote = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
+    console.log(req.body);
     const response = createNoteDto.safeParse(req.body);
     if (!response.success) {
       const errors = response.error.errors.map((error) => error.message);
