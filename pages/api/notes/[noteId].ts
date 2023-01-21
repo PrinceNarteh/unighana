@@ -1,10 +1,21 @@
-import { updateNoteDto, validateId } from "@/utils/validations";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
+import { updateNoteDto, validateId } from "@/utils/validations";
 import dbConnect from "@/config/dbConnect";
 import Note from "@/models/note";
 
 const getNote = async (req: NextApiRequest, res: NextApiResponse) => {
-  res.status(200).json({ note: "Get single note" });
+  try {
+    const note = await Note.findById(req.query.noteId);
+    if (!note) {
+      return res
+        .status(404)
+        .json({ error: `Note with ID "${req.query.noteId} not found."` });
+    }
+
+    res.status(200).json({ note });
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
 };
 const editNote = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -22,12 +33,18 @@ const editNote = async (req: NextApiRequest, res: NextApiResponse) => {
         .status(404)
         .json({ error: `Note with ID "${req.query.noteId} not found."` });
     }
-
     res.status(200).json({ note });
-  } catch (error) {}
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
 };
 const deleteNote = async (req: NextApiRequest, res: NextApiResponse) => {
-  res.status(200).json({ error: "delete note" });
+  try {
+    await Note.findByIdAndDelete(req.query.noteId);
+    res.status(200).json({ error: "Note deleted successfully." });
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
 };
 
 const handler: NextApiHandler = async (
