@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Poppins } from "@next/font/google";
 import Card from "./Card";
 import Navbar from "./Navbar";
@@ -15,6 +15,7 @@ const poppins = Poppins({ weight: ["500"], subsets: ["latin"] });
 export default function Home() {
   const notes = useSelector(selectAllNotes);
   const dispatch = useAppDispatch();
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     dispatch(fetchNotes());
@@ -23,7 +24,7 @@ export default function Home() {
   return (
     <main className={poppins.className}>
       <Navbar />
-      <SearchBar />
+      <SearchBar setOpenModal={setOpenModal} />
       <div className="max-w-5xl mx-auto">
         <div className="grid-auto-fit gap-5 p-5">
           {notes.map((note, idx) => (
@@ -31,7 +32,7 @@ export default function Home() {
           ))}
         </div>
       </div>
-      {/* <Form /> */}
+      {openModal && <Form setOpenModal={setOpenModal} />}
     </main>
   );
 }

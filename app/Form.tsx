@@ -1,10 +1,15 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { createNote } from "@/features/notes/notesSlice";
 import { useAppDispatch } from "@/store";
 import { Inputs } from "@/types/note";
+import { IoMdCloseCircleOutline } from "react-icons/io";
 
-const Form = () => {
+interface ISearchBar {
+  setOpenModal: Dispatch<SetStateAction<boolean>>;
+}
+
+const Form = ({ setOpenModal }: ISearchBar) => {
   const {
     register,
     formState: { errors },
@@ -26,7 +31,11 @@ const Form = () => {
 
   return (
     <div className="fixed inset-0 z-50 min-h-screen overflow-y-auto bg-gray-800/80 backdrop-blur-sm  flex justify-center items-center p-10">
-      <div className="max-w-xl w-full bg-white p-10 rounded-lg space-y-3">
+      <div className="relative max-w-xl w-full bg-white p-10 rounded-lg space-y-3">
+        <IoMdCloseCircleOutline
+          onClick={() => setOpenModal(false)}
+          className="absolute text-3xl text-gray-700 right-3 top-3 cursor-pointer hover:scale-125 duration-200"
+        />
         <h3 className="text-center text-2xl mb-5 font-semibold text-gray-500">
           Add Note
         </h3>
@@ -39,7 +48,9 @@ const Form = () => {
               type="text"
               className={`w-full outline-none border  p-2 rounded ${
                 errors.title ? "border-red-500" : "border-gray-500"
-              }`}
+              }
+              focus:border-teal-500
+              `}
               {...register("title", { required: true })}
             />
           </div>
@@ -50,6 +61,7 @@ const Form = () => {
             <textarea
               className={`w-full outline-none border border-gray-500 p-2 rounded
               ${errors.content ? "border-red-500" : "border-gray-500"}
+              focus:border-teal-500
               `}
               rows={7}
               {...register("content", { required: true })}
@@ -57,7 +69,7 @@ const Form = () => {
             <p></p>
           </div>
           <div>
-            <button className="bg bg-teal-500 text-white py-2 px-5 rounded-full float-right">
+            <button className="bg bg-teal-500 text-white py-2 px-5 rounded-full float-right hover:scale-110 duration-200">
               Add Note
             </button>
           </div>
