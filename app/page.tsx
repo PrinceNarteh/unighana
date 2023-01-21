@@ -1,3 +1,5 @@
+"use client";
+
 import { Poppins } from "@next/font/google";
 import Card from "./Card";
 import Navbar from "./Navbar";
