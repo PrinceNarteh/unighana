@@ -1,6 +1,9 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
+import dbConnect from "@/config/dbConnect";
+import Note from "@/models/note";
 
 const getAllNotes = async (req: NextApiRequest, res: NextApiResponse) => {
+  const notes = await Note.find({});
   return res.status(200).json({ notes: [] });
 };
 const createNote = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -12,6 +15,8 @@ const handler: NextApiHandler = async (
   res: NextApiResponse
 ) => {
   const { method } = req;
+
+  await dbConnect();
 
   switch (method) {
     case "GET":
