@@ -27,11 +27,9 @@ export default function Home() {
       <SearchBar />
       <div className="max-w-5xl mx-auto">
         <div className="grid-auto-fit gap-5 p-5">
-          {Array(10)
-            .fill(null)
-            .map((_, idx) => (
-              <Card key={idx} />
-            ))}
+          {notes.map((note, idx) => (
+            <Card note={note} key={idx} />
+          ))}
         </div>
       </div>
     </main>

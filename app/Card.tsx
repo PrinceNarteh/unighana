@@ -1,25 +1,16 @@
+import { INote } from "@/types/note";
 import React from "react";
 import { BiEdit } from "react-icons/bi";
 import { MdOutlineDelete } from "react-icons/md";
 
-const Card = () => {
+const Card = ({ note }: { note: INote }) => {
+  const { title, content } = note;
   return (
-    <div className="relative bg-rose-500 max-w-md p-5 h-52 rounded-lg group overflow-hidden cursor-pointer">
-      <h3 className="truncate font-bold text-xl mb-2 text-gray-800">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ea consequatur
-        esse exercitationem aperiam minus laboriosam ipsum illo. Sunt sint amet,
-        eos dolor numquam, repudiandae accusamus ad pariatur perspiciatis illum
-        et!
+    <div className="relative bg-[#ff00aa] max-w-md p-5 h-52 rounded-lg group overflow-hidden cursor-pointer shadow-md">
+      <h3 className="truncate font-bold text-xl mb-2 text-gray-800 border-b border-b-gray-800/30 pb-1">
+        {title}
       </h3>
-      <p className="line-clamp-4">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem id
-        reprehenderit quas ipsum quasi odit officia at repellendus fugit,
-        suscipit ab odio labore aliquam eum similique laudantium inventore
-        repudiandae non. Lorem ipsum dolor sit amet, consectetur adipisicing
-        elit. Dolorem id reprehenderit quas ipsum quasi odit officia at
-        repellendus fugit, suscipit ab odio labore aliquam eum similique
-        laudantium inventore repudiandae non.
-      </p>
+      <p className="line-clamp-4">{content}</p>
       <p className="absolute bottom-5 text-gray-800/80">20th Jan, 2023</p>
 
       {/* Options */}
