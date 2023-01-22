@@ -28,8 +28,6 @@ const Form = ({ setOpenModal }: ISearchBar) => {
     setOpenModal(false);
   };
 
-  console.log(errors);
-
   return (
     <div className="fixed inset-0 z-50 min-h-screen overflow-y-auto bg-gray-800/80 backdrop-blur-sm  flex justify-center items-center p-10">
       <div className="relative max-w-xl w-full bg-white p-10 rounded-lg space-y-3">
