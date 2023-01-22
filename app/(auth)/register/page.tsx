@@ -7,8 +7,9 @@ import registerImg from "@/assets/images/register.jpg";
 import InputField from "../InputField";
 import { httpClient } from "@/utils/httpClient";
 import { SubmitHandler, useForm } from "react-hook-form";
-// import { toast, ToastContainer } from "react-toastify";
-// import Spinner from "@/components/Spinner";
+import { toast } from "react-toastify";
+import Spinner from "@/app/Spinner";
+import { useRouter } from "next/navigation";
 
 type RegisterInput = {
   firstName: string;
@@ -33,8 +34,12 @@ const Register = () => {
     },
   });
   const [loading, setLoading] = useState<boolean>(false);
+  const router = useRouter();
 
-  const submitData: SubmitHandler<RegisterInput> = async (data) => {};
+  const submitData: SubmitHandler<RegisterInput> = async (data) => {
+    toast.success("Registration successful");
+    router.push("/login");
+  };
 
   return (
     <div className="h-screen w-full bg-white flex justify-center items-center px-5">

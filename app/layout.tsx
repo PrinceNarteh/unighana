@@ -1,3 +1,7 @@
+"use client";
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 import { Providers } from "./Providers";
 
@@ -15,6 +19,7 @@ export default function RootLayout({
       <head />
       <body>
         <Providers>{children}</Providers>
+        <ToastContainer />
       </body>
     </html>
   );
