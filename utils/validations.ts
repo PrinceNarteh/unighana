@@ -28,3 +28,12 @@ export const createUserDto = z.object({
     .string({ required_error: "Password is required" })
     .min(6, "Password must be six (6) characters or more"),
 });
+
+export const loginDto = z.object({
+  email: z
+    .string({ required_error: "Email is required" })
+    .email("Invalid email"),
+  password: z
+    .string({ required_error: "Password is required" })
+    .min(6, "Password must be six (6) characters or more"),
+});
