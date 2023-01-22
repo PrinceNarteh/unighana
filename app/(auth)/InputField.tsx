@@ -11,7 +11,7 @@ const InputField = ({
   additionalStyles,
   type = "text",
   ...props
-}: IInputField) => {
+}: any) => {
   return (
     <div className="my-1 flex-1">
       <label className="block mb-1">{label}</label>

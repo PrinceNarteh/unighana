@@ -29,6 +29,21 @@ export const createUserDto = z.object({
     .min(6, "Password must be six (6) characters or more"),
 });
 
+export const registerUserDto = createUserDto
+  .extend({
+    confirmPassword: z
+      .string({ required_error: "Password is required" })
+      .min(6, "Password must be six (6) characters or more"),
+  })
+  .superRefine(({ password, confirmPassword }, ctx) => {
+    if (password !== confirmPassword) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Passwords do not match",
+      });
+    }
+  });
+
 export const loginDto = z.object({
   email: z
     .string({ required_error: "Email is required" })

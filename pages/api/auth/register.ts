@@ -31,7 +31,8 @@ const handler: NextApiHandler = async (
       res.status(201).json({ user });
     }
   } catch (error: any) {
-    if (error.code === 11000) {
+    console.log(error);
+    if (error.message.includes("E11000")) {
       return res.status(409).json({ errors: ["Email already in used"] });
     }
 

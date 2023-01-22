@@ -1,14 +1,16 @@
 "use client";
 
-// import { signIn } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useState } from "react";
 
+import Spinner from "@/app/Spinner";
 import login from "@/assets/images/login.jpg";
-import InputField from "../InputField";
 import { useForm } from "react-hook-form";
-// import Spinner from "../../components/Spinner";
+import InputField from "../../InputField";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 interface LoginInput {
   email: string;
@@ -25,18 +27,18 @@ const Login = () => {
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState<boolean>(false);
+  const router = useRouter();
 
-  const submitData = async (e: LoginInput) => {
-    // e.preventDefault();
-    // setLoading(true);
-    // // const res = await signIn("credentials", { ...data, redirect: false });
-    // if (!res?.ok) {
-    //   setError("Invalid credentials");
-    //   setLoading(false);
-    // } else {
-    //   setLoading(false);
-    //   router.push("/");
-    // }
+  const submitData = async (data: LoginInput) => {
+    setLoading(true);
+    const res = await signIn("credentials", { ...data, redirect: false });
+    if (!res?.ok) {
+      toast.error("Invalid credentials");
+      setLoading(false);
+    } else {
+      setLoading(false);
+      router.push("/");
+    }
   };
 
   return (
@@ -62,7 +64,7 @@ const Login = () => {
               {...register("password")}
             />
             <button className="w-full bg-slate-700 flex justify-center items-center space-x-3 text-white py-2 rounded mt-2">
-              {/* {loading && <Spinner />}{" "} */}
+              {loading && <Spinner />}{" "}
               <span className="inline-block">Login</span>
             </button>
           </form>

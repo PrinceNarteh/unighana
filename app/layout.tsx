@@ -19,7 +19,7 @@ export default function RootLayout({
       <head />
       <body>
         <Providers>{children}</Providers>
-        <ToastContainer />
+        <ToastContainer theme="colored" />
       </body>
     </html>
   );
