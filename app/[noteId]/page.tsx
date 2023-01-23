@@ -2,12 +2,15 @@
 
 import notFound from "@/assets/images/not-found.png";
 import { selectAllNotes } from "@/features/notes/notesSlice";
+import { useAppDispatch } from "@/store";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { BiEdit } from "react-icons/bi";
 import { MdArrowBackIos, MdOutlineDelete } from "react-icons/md";
 import { useSelector } from "react-redux";
+import { deleteNote } from "@/features/notes/notesSlice";
+import { toast } from "react-toastify";
 
 interface INoteDetails {
   params: {
@@ -17,9 +20,15 @@ interface INoteDetails {
 
 const NoteDetails = ({ params }: INoteDetails) => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const notes = useSelector(selectAllNotes);
   const note = notes.find((note) => note._id === params.noteId);
+
+  const handleDelete = (noteId: string) => {
+    dispatch(deleteNote(noteId));
+    toast.success("Note deleted successfully");
+  };
 
   return (
     <div className="max-w-5xl mx-auto">
@@ -42,7 +51,10 @@ const NoteDetails = ({ params }: INoteDetails) => {
               <Link href={`/${note._id}/edit`}>
                 <BiEdit className="cursor-pointer text-teal-500 hover:scale-110 duration-200" />
               </Link>
-              <MdOutlineDelete className="cursor-pointer text-[red] hover:scale-110 duration-200" />
+              <MdOutlineDelete
+                className="cursor-pointer text-[red] hover:scale-110 duration-200"
+                onClick={() => handleDelete(note._id)}
+              />
             </div>
           </div>
           <p className="text-xl text-gray-500">{note?.content}</p>

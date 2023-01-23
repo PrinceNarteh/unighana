@@ -41,7 +41,7 @@ const editNote = async (req: NextApiRequest, res: NextApiResponse) => {
 const deleteNote = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     await Note.findByIdAndDelete(req.query.noteId);
-    res.status(200).json({ error: "Note deleted successfully." });
+    res.status(200).json({ noteId: req.query.noteId });
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }

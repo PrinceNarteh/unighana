@@ -2,6 +2,7 @@ import { httpClient } from "@/utils/httpClient";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "@/store";
 import { INote, Inputs } from "@/types/note";
+import build from "next/dist/build";
 
 export const fetchNotes = createAsyncThunk(
   "notes/getAllNotes",
@@ -24,6 +25,14 @@ export const editNote = createAsyncThunk(
   async (note: INote) => {
     const response = await httpClient.patch(`/notes/${note._id}`, note);
     return response.data.note;
+  }
+);
+
+export const deleteNote = createAsyncThunk(
+  "notes/deleteNote",
+  async (noteId: string) => {
+    const response = await httpClient.delete(`/notes/${noteId}`);
+    return response.data;
   }
 );
 
@@ -61,6 +70,15 @@ const noteSlice = createSlice({
           }
         });
         state.notes = newNotes;
+      }
+    );
+    builder.addCase(
+      deleteNote.fulfilled,
+      (state, action: PayloadAction<{ noteId: string }>) => {
+        console.log(action.payload);
+        state.notes = state.notes.filter(
+          (note) => note._id !== action.payload.noteId
+        );
       }
     );
   },

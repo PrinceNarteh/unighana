@@ -1,11 +1,19 @@
+import { deleteNote } from "@/features/notes/notesSlice";
+import { useAppDispatch } from "@/store";
 import { INote } from "@/types/note";
 import Link from "next/link";
-import React from "react";
 import { BiEdit } from "react-icons/bi";
 import { MdOutlineDelete } from "react-icons/md";
+import { toast } from "react-toastify";
 
 const Card = ({ idx, note }: { idx: number; note: INote }) => {
+  const dispatch = useAppDispatch();
   const { title, content, _id } = note;
+
+  const handleDelete = (noteId: string) => {
+    dispatch(deleteNote(noteId));
+    toast.success("Note deleted successfully");
+  };
 
   return (
     <div
@@ -28,7 +36,10 @@ const Card = ({ idx, note }: { idx: number; note: INote }) => {
         <Link href={`/${_id}/edit`}>
           <BiEdit className="cursor-pointer hover:scale-125 duration-200" />
         </Link>
-        <MdOutlineDelete className="cursor-pointer hover:scale-125 duration-200" />
+        <MdOutlineDelete
+          className="cursor-pointer hover:scale-125 duration-200"
+          onClick={() => handleDelete(_id)}
+        />
       </div>
     </div>
   );
