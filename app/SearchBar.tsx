@@ -4,6 +4,7 @@ import { BiSearchAlt } from "react-icons/bi";
 import { MdAdd } from "react-icons/md";
 import { useAppDispatch } from "@/store";
 import { openModal } from "@/features/modal/modalSlice";
+import { filterNote } from "@/features/notes/notesSlice";
 
 const SearchBar = () => {
   const dispatch = useAppDispatch();
@@ -11,7 +12,11 @@ const SearchBar = () => {
   return (
     <div className="flex justify-center gap-5">
       <div className="border flex items-center border-teal-500 max-w-xs w-full rounded-lg p-2">
-        <input type="text" className="outline-none w-full text-gray-500" />
+        <input
+          type="text"
+          className="outline-none w-full text-gray-500"
+          onChange={(e) => dispatch(filterNote(e.target.value))}
+        />
         <BiSearchAlt className="text-2xl text-teal-500" />
       </div>
       <button

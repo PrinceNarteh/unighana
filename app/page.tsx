@@ -21,7 +21,7 @@ export default function Home() {
     dispatch(fetchNotes());
   }, []);
 
-  console.log(modalState);
+  console.log(notes);
 
   return (
     <main className={poppins.className}>

@@ -1,20 +1,16 @@
-import { httpClient } from "@/utils/httpClient";
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "@/store";
 import { INote, Inputs } from "@/types/note";
-import build from "next/dist/build";
+import { httpClient } from "@/utils/httpClient";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export const fetchNotes = createAsyncThunk(
-  "notes/getAllNotes",
-  async (thunkApi) => {
-    const response = await httpClient("/notes");
-    return response.data.notes;
-  }
-);
+export const fetchNotes = createAsyncThunk("notes/getAllNotes", async () => {
+  const response = await httpClient("/notes");
+  return response.data.notes;
+});
 
 export const createNote = createAsyncThunk(
   "notes/createNote",
-  async (note: Inputs, thunkApi) => {
+  async (note: Inputs) => {
     const response = await httpClient.post("/notes", note);
     return response.data.note;
   }
@@ -38,25 +34,41 @@ export const deleteNote = createAsyncThunk(
 
 const initialState: {
   notes: INote[];
+  filteredNotes: INote[];
 } = {
   notes: [],
+  filteredNotes: [],
 };
 
 const noteSlice = createSlice({
   name: "notes",
   initialState,
-  reducers: {},
+  reducers: {
+    filterNote: (state, action: PayloadAction<string>) => {
+      if (action.payload === "") {
+        state.filteredNotes = state.notes;
+      } else {
+        state.filteredNotes = state.notes.filter(
+          (note) =>
+            note.title.toLowerCase().includes(action.payload.toLowerCase()) ||
+            note.content.toLowerCase().includes(action.payload.toLowerCase())
+        );
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(
       fetchNotes.fulfilled,
       (state, action: PayloadAction<INote[]>) => {
         state.notes = action.payload;
+        state.filteredNotes = action.payload;
       }
     );
     builder.addCase(
       createNote.fulfilled,
       (state, action: PayloadAction<INote>) => {
         state.notes = [action.payload, ...state.notes];
+        state.filteredNotes = state.notes;
       }
     );
     builder.addCase(
@@ -70,6 +82,7 @@ const noteSlice = createSlice({
           }
         });
         state.notes = newNotes;
+        state.filteredNotes = state.notes;
       }
     );
     builder.addCase(
@@ -79,10 +92,12 @@ const noteSlice = createSlice({
         state.notes = state.notes.filter(
           (note) => note._id !== action.payload.noteId
         );
+        state.filteredNotes = state.notes;
       }
     );
   },
 });
 
 export default noteSlice.reducer;
-export const selectAllNotes = (state: RootState) => state.note.notes;
+export const { filterNote } = noteSlice.actions;
+export const selectAllNotes = (state: RootState) => state.note.filteredNotes;
