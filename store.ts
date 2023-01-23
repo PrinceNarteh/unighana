@@ -1,6 +1,7 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import noteReducer from "./features/notes/notesSlice";
+import modalReducer from "./features/modal/modalSlice";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
@@ -12,6 +13,7 @@ const persistConfig = {
 
 const reducer = combineReducers({
   note: noteReducer,
+  modal: modalReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);
@@ -19,6 +21,10 @@ const persistedReducer = persistReducer(persistConfig, reducer);
 export function makeStore() {
   return configureStore({
     reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        serializableCheck: false,
+      }),
   });
 }
 

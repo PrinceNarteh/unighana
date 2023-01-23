@@ -8,21 +8,24 @@ import { useSelector } from "react-redux";
 import Card from "./Card";
 import Form from "./Form";
 import SearchBar from "./SearchBar";
+import { selectModalState } from "@/features/modal/modalSlice";
 
 const poppins = Poppins({ weight: ["500"], subsets: ["latin"] });
 
 export default function Home() {
   const notes = useSelector(selectAllNotes);
   const dispatch = useAppDispatch();
-  const [openModal, setOpenModal] = useState(false);
+  const modalState = useSelector(selectModalState);
 
   useEffect(() => {
     dispatch(fetchNotes());
   }, []);
 
+  console.log(modalState);
+
   return (
     <main className={poppins.className}>
-      <SearchBar setOpenModal={setOpenModal} />
+      <SearchBar />
       <div className="max-w-5xl mx-auto">
         <div className="grid-auto-fit gap-5 p-5">
           {notes.map((note, idx) => (
@@ -30,7 +33,7 @@ export default function Home() {
           ))}
         </div>
       </div>
-      {openModal && <Form setOpenModal={setOpenModal} />}
+      {modalState && <Form />}
     </main>
   );
 }
