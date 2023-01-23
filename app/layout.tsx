@@ -3,6 +3,7 @@
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
+import Navbar from "./Navbar";
 import { Providers } from "./Providers";
 
 export default function RootLayout({
@@ -18,6 +19,7 @@ export default function RootLayout({
       */}
       <head />
       <body>
+        <Navbar />
         <Providers>{children}</Providers>
         <ToastContainer theme="colored" />
       </body>
