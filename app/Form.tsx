@@ -2,12 +2,13 @@
 
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { createNote } from "@/features/notes/notesSlice";
+import { createNote, editNote } from "@/features/notes/notesSlice";
 import { useAppDispatch } from "@/store";
 import { INote, Inputs } from "@/types/note";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { closeModal } from "@/features/modal/modalSlice";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 const Form = ({ note }: { note?: INote }) => {
   const {
@@ -24,16 +25,24 @@ const Form = ({ note }: { note?: INote }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const submitData: SubmitHandler<Inputs> = async (data) => {
-    await dispatch(createNote(data));
-    dispatch(closeModal());
-  };
-
   const handleCloseModal = () => {
     if (note?._id) {
       dispatch(closeModal());
       router.push(`/${note._id}`);
     } else {
+      dispatch(closeModal());
+    }
+  };
+
+  const submitData: SubmitHandler<Inputs> = async (data) => {
+    if (note?._id) {
+      await dispatch(editNote(data));
+      toast.success("Note updated successfully");
+      dispatch(closeModal());
+      router.push(`/${note._id}`);
+    } else {
+      await dispatch(createNote(data));
+      toast.success("Note created successfully");
       dispatch(closeModal());
     }
   };

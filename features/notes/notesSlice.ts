@@ -19,6 +19,14 @@ export const createNote = createAsyncThunk(
   }
 );
 
+export const editNote = createAsyncThunk(
+  "notes/editNote",
+  async (note: INote) => {
+    const response = await httpClient.patch(`/notes/${note._id}`, note);
+    return response.data.note;
+  }
+);
+
 const initialState: {
   notes: INote[];
 } = {
@@ -39,8 +47,20 @@ const noteSlice = createSlice({
     builder.addCase(
       createNote.fulfilled,
       (state, action: PayloadAction<INote>) => {
-        console.log(action.payload);
         state.notes = [action.payload, ...state.notes];
+      }
+    );
+    builder.addCase(
+      editNote.fulfilled,
+      (state, action: PayloadAction<INote>) => {
+        const newNotes = state.notes.map((note) => {
+          if (note._id === action.payload._id) {
+            return action.payload;
+          } else {
+            return note;
+          }
+        });
+        state.notes = newNotes;
       }
     );
   },
