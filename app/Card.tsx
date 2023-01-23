@@ -25,7 +25,9 @@ const Card = ({ idx, note }: { idx: number; note: INote }) => {
       </Link>
       {/* Options */}
       <div className="absolute h-full right-0 top-0 bg-white bg-opacity-10 border-l border-l-white text-white flex flex-col justify-center px-[10px] text-2xl gap-5 transition-all translate-x-14 group-hover:-translate-x-0 duration-300 shadow-xl">
-        <BiEdit className="cursor-pointer hover:scale-125 duration-200" />
+        <Link href={`/${_id}/edit`}>
+          <BiEdit className="cursor-pointer hover:scale-125 duration-200" />
+        </Link>
         <MdOutlineDelete className="cursor-pointer hover:scale-125 duration-200" />
       </div>
     </div>

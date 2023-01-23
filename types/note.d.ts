@@ -13,6 +13,7 @@ export interface IUser {
 }
 
 export type Inputs = {
+  _id: string;
   title: string;
   content: string;
 };

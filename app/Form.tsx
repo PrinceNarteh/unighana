@@ -2,19 +2,20 @@ import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { createNote } from "@/features/notes/notesSlice";
 import { useAppDispatch } from "@/store";
-import { Inputs } from "@/types/note";
+import { INote, Inputs } from "@/types/note";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { closeModal } from "@/features/modal/modalSlice";
 
-const Form = () => {
+const Form = ({ note }: { note?: INote }) => {
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm<Inputs>({
     defaultValues: {
-      title: "",
-      content: "",
+      _id: note?._id || "",
+      title: note?.title || "",
+      content: note?.content || "",
     },
   });
 
