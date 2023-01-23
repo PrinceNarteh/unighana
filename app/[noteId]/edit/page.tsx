@@ -21,7 +21,6 @@ const EditNote = ({ params }: IEditNote) => {
 
   return (
     <div className="max-w-5xl mx-auto">
-      {params.noteId}
       <Form note={note} />
     </div>
   );

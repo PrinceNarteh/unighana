@@ -1,35 +1,53 @@
 "use client";
 
+import notFound from "@/assets/images/not-found.png";
+import { selectAllNotes } from "@/features/notes/notesSlice";
+import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React from "react";
 import { BiEdit } from "react-icons/bi";
-import { MdOutlineDelete, MdArrowBackIos } from "react-icons/md";
+import { MdArrowBackIos, MdOutlineDelete } from "react-icons/md";
+import { useSelector } from "react-redux";
 
-const NoteDetails = () => {
+interface INoteDetails {
+  params: {
+    noteId: string;
+  };
+}
+
+const NoteDetails = ({ params }: INoteDetails) => {
   const router = useRouter();
+
+  const notes = useSelector(selectAllNotes);
+  const note = notes.find((note) => note._id === params.noteId);
 
   return (
     <div className="max-w-5xl mx-auto">
-      <h3 className="text-3xl border-b border-b-gray-300 pb-2 text-center text-gray-600">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique,
-        libero.
-      </h3>
-      <div className="flex justify-between text-gray-700 text-3xl my-3 px-3">
-        <MdArrowBackIos
-          className="cursor-pointer hover:scale-110 duration-200"
-          onClick={() => router.push("/")}
-        />
-        <div className="flex gap-3">
-          <BiEdit className="cursor-pointer text-teal-500 hover:scale-110 duration-200" />
-          <MdOutlineDelete className="cursor-pointer text-[red] hover:scale-110 duration-200" />
+      {!note ? (
+        <div className="flex flex-col items-center">
+          <Image src={notFound} alt="" />
+          <h3 className="text-2xl text-gray-700">Note Not Found</h3>
         </div>
-      </div>
-      <p className="text-xl text-gray-500">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus corporis
-        laudantium possimus nesciunt atque molestiae, fugiat aperiam, quos
-        delectus explicabo quas illum, earum adipisci iste? Architecto
-        cupiditate pariatur aut et.
-      </p>
+      ) : (
+        <>
+          <h3 className="text-3xl border-b border-b-gray-300 pb-2 text-center text-gray-600">
+            {note?.title}
+          </h3>
+          <div className="flex justify-between text-gray-700 text-3xl my-3 px-3">
+            <MdArrowBackIos
+              className="cursor-pointer hover:scale-110 duration-200"
+              onClick={() => router.push("/")}
+            />
+            <div className="flex gap-3">
+              <Link href={`/${note._id}/edit`}>
+                <BiEdit className="cursor-pointer text-teal-500 hover:scale-110 duration-200" />
+              </Link>
+              <MdOutlineDelete className="cursor-pointer text-[red] hover:scale-110 duration-200" />
+            </div>
+          </div>
+          <p className="text-xl text-gray-500">{note?.content}</p>
+        </>
+      )}
     </div>
   );
 };

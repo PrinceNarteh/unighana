@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { createNote } from "@/features/notes/notesSlice";
@@ -5,6 +7,7 @@ import { useAppDispatch } from "@/store";
 import { INote, Inputs } from "@/types/note";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { closeModal } from "@/features/modal/modalSlice";
+import { useRouter } from "next/navigation";
 
 const Form = ({ note }: { note?: INote }) => {
   const {
@@ -18,7 +21,7 @@ const Form = ({ note }: { note?: INote }) => {
       content: note?.content || "",
     },
   });
-
+  const router = useRouter();
   const dispatch = useAppDispatch();
 
   const submitData: SubmitHandler<Inputs> = async (data) => {
@@ -26,11 +29,20 @@ const Form = ({ note }: { note?: INote }) => {
     dispatch(closeModal());
   };
 
+  const handleCloseModal = () => {
+    if (note?._id) {
+      dispatch(closeModal());
+      router.push(`/${note._id}`);
+    } else {
+      dispatch(closeModal());
+    }
+  };
+
   return (
     <div className="fixed inset-0 z-50 min-h-screen overflow-y-auto bg-gray-800/80 backdrop-blur-sm  flex justify-center items-center p-10">
       <div className="relative max-w-xl w-full bg-white p-10 rounded-lg space-y-3">
         <IoMdCloseCircleOutline
-          onClick={() => dispatch(closeModal())}
+          onClick={() => handleCloseModal()}
           className="absolute text-3xl text-gray-700 right-3 top-3 cursor-pointer hover:scale-125 duration-200"
         />
         <h3 className="text-center text-2xl mb-5 font-semibold text-gray-500">
