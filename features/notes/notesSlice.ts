@@ -32,6 +32,14 @@ export const deleteNote = createAsyncThunk(
   }
 );
 
+export const favouriteNote = createAsyncThunk(
+  "notes/favouriteNote",
+  async (noteId: string) => {
+    const response = await httpClient.patch(`/notes/${noteId}/favourite`);
+    return response.data.note;
+  }
+);
+
 const initialState: {
   notes: INote[];
   filteredNotes: INote[];
@@ -88,10 +96,23 @@ const noteSlice = createSlice({
     builder.addCase(
       deleteNote.fulfilled,
       (state, action: PayloadAction<{ noteId: string }>) => {
-        console.log(action.payload);
         state.notes = state.notes.filter(
           (note) => note._id !== action.payload.noteId
         );
+        state.filteredNotes = state.notes;
+      }
+    );
+    builder.addCase(
+      favouriteNote.fulfilled,
+      (state, action: PayloadAction<INote>) => {
+        const newNotes = state.notes.map((note) => {
+          if (note._id === action.payload._id) {
+            return action.payload;
+          } else {
+            return note;
+          }
+        });
+        state.notes = newNotes;
         state.filteredNotes = state.notes;
       }
     );

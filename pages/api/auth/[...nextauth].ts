@@ -14,7 +14,6 @@ export default NextAuth({
       },
 
       async authorize(credentials, req) {
-        console.log(credentials);
         const result = loginDto.safeParse(credentials);
 
         if (!result.success) {
@@ -26,7 +25,6 @@ export default NextAuth({
         const user = await User.findOne({ email });
 
         if (user && (await bcrypt.compare(password, user.password))) {
-          console.log(user);
           return user;
         }
         return null;

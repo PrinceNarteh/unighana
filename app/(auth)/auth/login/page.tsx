@@ -31,10 +31,8 @@ const Login = () => {
   const router = useRouter();
 
   const submitData = async (data: LoginInput) => {
-    console.log(data);
     setLoading(true);
     const res = await signIn("credentials", { ...data, redirect: false });
-    console.log(res);
     if (!res?.ok) {
       toast.error("Invalid credentials");
       setLoading(false);

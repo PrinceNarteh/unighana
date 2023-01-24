@@ -42,12 +42,8 @@ const Register = () => {
     if (res.status === 201) {
       toast.success("Registration successful");
       router.push("/auth/login");
-    } else {
-      console.log(res);
     }
   };
-
-  console.log(errors);
 
   return (
     <div className="h-screen w-full bg-gradient-to-br from-[#088181] to-[#0d9f9f]  flex justify-center items-center px-5">

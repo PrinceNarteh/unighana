@@ -37,7 +37,7 @@ const handler: NextApiHandler = async (
     note = await Note.findByIdAndUpdate(
       req.query.noteId,
       {
-        $set: { favorite: !note.favorite },
+        $set: { favourite: !note.favourite },
       },
       { new: true }
     );

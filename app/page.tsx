@@ -22,8 +22,6 @@ export default function Home() {
     dispatch(fetchNotes());
   }, []);
 
-  console.log(notes);
-
   return (
     <main className={poppins.className}>
       <Navbar />

@@ -10,8 +10,6 @@ import { useSession } from "next-auth/react";
 const Navbar = () => {
   const { data: session } = useSession();
 
-  console.log(session);
-
   return (
     <nav className="shadow-md z-20 px-5">
       <div className="max-w-6xl mx-auto py-3 flex items-center justify-between">

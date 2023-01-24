@@ -1,10 +1,18 @@
-import { Schema, model, models } from "mongoose";
+import {
+  Schema,
+  model,
+  models,
+  Types,
+  Document,
+  SchemaDefinitionProperty,
+} from "mongoose";
 
-type INote = {
+interface INote extends Document {
   title: string;
   content: string;
   favourite?: boolean;
-};
+  author: SchemaDefinitionProperty<Types.ObjectId>;
+}
 
 const noteSchema = new Schema<INote>(
   {
@@ -19,6 +27,10 @@ const noteSchema = new Schema<INote>(
     favourite: {
       type: Boolean,
       default: false,
+    },
+    author: {
+      type: Types.ObjectId,
+      required: true,
     },
   },
   {
