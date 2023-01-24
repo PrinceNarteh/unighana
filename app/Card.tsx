@@ -1,6 +1,7 @@
 import { deleteNote } from "@/features/notes/notesSlice";
 import { useAppDispatch } from "@/store";
 import { INote } from "@/types/note";
+import { formatDistance } from "date-fns";
 import Link from "next/link";
 import { BiEdit } from "react-icons/bi";
 import { MdOutlineDelete } from "react-icons/md";
@@ -9,6 +10,10 @@ import { toast } from "react-toastify";
 const Card = ({ idx, note }: { idx: number; note: INote }) => {
   const dispatch = useAppDispatch();
   const { title, content, _id } = note;
+
+  const dateCreated = formatDistance(new Date(note.createdAt), new Date(), {
+    addSuffix: true,
+  });
 
   const handleDelete = (noteId: string) => {
     dispatch(deleteNote(noteId));
@@ -29,7 +34,7 @@ const Card = ({ idx, note }: { idx: number; note: INote }) => {
           {title}
         </h3>
         <p className="line-clamp-4 text-gray-300 h-24">{content}</p>
-        <p className="absolute bottom-5">20th Jan, 2023</p>
+        <p className="absolute bottom-5">{dateCreated}</p>
       </Link>
       {/* Options */}
       <div className="absolute h-full right-0 top-0 bg-white bg-opacity-10 border-l border-l-white text-white flex flex-col justify-center px-[10px] text-2xl gap-5 transition-all translate-x-14 group-hover:-translate-x-0 duration-300 shadow-xl">
