@@ -10,8 +10,8 @@ const SearchBar = () => {
   const dispatch = useAppDispatch();
 
   return (
-    <div className="flex justify-center gap-5">
-      <div className="border flex items-center border-teal-500 max-w-xs w-full rounded-lg p-2">
+    <div className="flex justify-center flex-col sm:flex-row px-5 gap-5 mt-5">
+      <div className="border flex items-center border-teal-500 sm:max-w-xs w-full rounded-lg p-2">
         <input
           type="text"
           className="outline-none w-full text-gray-500"

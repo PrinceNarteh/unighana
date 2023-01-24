@@ -1,17 +1,16 @@
 "use client";
 
+import Spinner from "@/app/Spinner";
+import registerImg from "@/assets/images/register.jpg";
+import { httpClient } from "@/utils/httpClient";
+import { registerUserDto } from "@/utils/validations";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
-import registerImg from "@/assets/images/register.jpg";
-import InputField from "../../InputField";
-import { httpClient } from "@/utils/httpClient";
+import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import Spinner from "@/app/Spinner";
-import { useRouter } from "next/navigation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { registerUserDto } from "@/utils/validations";
+import logo from "@/assets/images/logo.png";
 
 type RegisterInput = {
   firstName: string;
@@ -48,10 +47,8 @@ const Register = () => {
     }
   };
 
-  console.log(errors);
-
   return (
-    <div className="h-screen w-full bg-white flex justify-center items-center px-5">
+    <div className="h-screen w-full bg-gradient-to-br from-[#088181] to-[#0d9f9f]  flex justify-center items-center px-5">
       <div className="bg-gray-100 max-w-4xl mx-auto w-full min-h-96 grid grid-cols-1 md:grid-cols-3 shadow-lg rounded-md overflow-hidden p-5">
         <div className="relative overflow-hidden rounded-md">
           <Image
@@ -62,7 +59,9 @@ const Register = () => {
           />
         </div>
         <div className="ml-5 col-span-2">
-          {/* <ToastContainer /> */}
+          <div className="flex justify-center my-4">
+            <Image src={logo} alt="logo" />
+          </div>
           <h3 className="text-3xl font-bold text-slate-700">Register</h3>
           <p className="my-2 text-slate-500">
             Provide your details for get registered.

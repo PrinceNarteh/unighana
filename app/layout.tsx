@@ -19,7 +19,6 @@ export default function RootLayout({
       */}
       <head />
       <body>
-        <Navbar />
         <Providers>{children}</Providers>
         <ToastContainer theme="colored" />
       </body>
