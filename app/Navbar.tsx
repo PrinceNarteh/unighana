@@ -20,7 +20,7 @@ const Navbar = () => {
         </Link>
         <div className="flex items-center gap-5">
           {session && (
-            <p>{`${session.user.firstName} ${session.user.lastName}`}</p>
+            <p className="text-gray-700">{`${session.user.firstName} ${session.user.lastName}`}</p>
           )}
           <button className="text-blue-500 text-sm" onClick={() => signOut()}>
             Log Out

@@ -71,6 +71,11 @@ const Form = ({ note }: { note?: INote }) => {
               `}
               {...register("title", { required: true })}
             />
+            {errors.title && (
+              <p className="text-[red] text-xs pl-1 mt-0.5">
+                {"Title cannot be empty"}
+              </p>
+            )}
           </div>
           <div>
             <label htmlFor="content" className="block mb-1 text-gray-500">
@@ -84,7 +89,11 @@ const Form = ({ note }: { note?: INote }) => {
               rows={7}
               {...register("content", { required: true })}
             />
-            <p></p>
+            {errors.content && (
+              <p className="text-[red] text-xs pl-1 mt-0.5">
+                {"Content cannot be empty"}
+              </p>
+            )}
           </div>
           <div>
             <button className="bg bg-teal-500 text-white py-2 px-5 rounded-full float-right hover:scale-110 duration-200">

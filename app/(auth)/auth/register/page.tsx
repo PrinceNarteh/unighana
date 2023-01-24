@@ -47,6 +47,8 @@ const Register = () => {
     }
   };
 
+  console.log(errors);
+
   return (
     <div className="h-screen w-full bg-gradient-to-br from-[#088181] to-[#0d9f9f]  flex justify-center items-center px-5">
       <div className="bg-gray-100 max-w-4xl mx-auto w-full min-h-96 grid grid-cols-1 md:grid-cols-3 shadow-lg rounded-md overflow-hidden p-5">
